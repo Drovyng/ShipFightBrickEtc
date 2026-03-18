@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://bm2cj1bc53u24"]
+
+[ext_resource type="Texture2D" uid="uid://6r2onx6q8hfh" path="res://Ship.png" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://c4agjqrr5ls1e" path="res://game.gd" id="1_xkndl"]
+[ext_resource type="Texture2D" uid="uid://ci7ia28y41utl" path="res://Numbers.png" id="2_u44n3"]
+[ext_resource type="Texture2D" uid="uid://dd4q31plqbke" path="res://BonusHealth.png" id="3_sb48q"]
+[ext_resource type="Texture2D" uid="uid://tojq3iwuluys" path="res://GameOver.png" id="5_t88pq"]
+
+[node name="Game" type="ColorRect" unique_id=299214364]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05882353, 0.05882353, 0.05882353, 1)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1635583471]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(40, 40)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="GameRoot" type="SubViewport" parent="SubViewportContainer" unique_id=668440135 node_paths=PackedStringArray("parent", "player", "bonus_health", "live_num", "score_num")]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+mesh_lod_threshold = 0.0
+canvas_item_default_texture_filter = 0
+oversampling = false
+size = Vector2i(80, 80)
+render_target_update_mode = 4
+script = ExtResource("1_xkndl")
+parent = NodePath("..")
+player = NodePath("Ship")
+bonus_health = NodePath("BonusHealth")
+live_num = NodePath("Live Number")
+score_num = [NodePath("Numbers2"), NodePath("Numbers3")]
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/GameRoot" unique_id=806561243]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameOver" type="Sprite2D" parent="SubViewportContainer/GameRoot" unique_id=56367272]
+visible = false
+position = Vector2(9, 23)
+texture = ExtResource("5_t88pq")
+centered = false
+
+[node name="Live Number" type="Sprite2D" parent="SubViewportContainer/GameRoot" unique_id=1454865790]
+position = Vector2(2, 76)
+texture = ExtResource("2_u44n3")
+hframes = 10
+frame = 5
+
+[node name="Numbers2" type="Sprite2D" parent="SubViewportContainer/GameRoot" unique_id=1345298596]
+position = Vector2(77, 76)
+texture = ExtResource("2_u44n3")
+hframes = 10
+
+[node name="Numbers3" type="Sprite2D" parent="SubViewportContainer/GameRoot" unique_id=320268265]
+position = Vector2(73, 76)
+texture = ExtResource("2_u44n3")
+hframes = 10
+
+[node name="BonusHealth" type="Sprite2D" parent="SubViewportContainer/GameRoot" unique_id=1849319870]
+visible = false
+position = Vector2(15, 56)
+texture = ExtResource("3_sb48q")
+centered = false
+
+[node name="Ship" type="Sprite2D" parent="SubViewportContainer/GameRoot" unique_id=290370643]
+position = Vector2(32, 62)
+texture = ExtResource("1_wbfu4")
+centered = false

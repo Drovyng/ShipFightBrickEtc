@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dvdbe4tuhx28k"]
+
+[ext_resource type="Texture2D" uid="uid://b62xgb57jddok" path="res://Brick.png" id="1_5p85m"]
+[ext_resource type="Script" uid="uid://dob7jcq360nc8" path="res://brick.gd" id="2_mt0q5"]
+
+[node name="Brick" type="Sprite2D" unique_id=167004007]
+texture = ExtResource("1_5p85m")
+centered = false
+script = ExtResource("2_mt0q5")
