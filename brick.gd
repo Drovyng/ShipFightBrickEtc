@@ -1,7 +1,7 @@
 extends Sprite2D
 class_name Brick
 
-const MOVE_TIMER: int = 70
+static var MOVE_TIMER: int = 70
 
 var type: int = 0
 var health: int = 2

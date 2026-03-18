@@ -26,6 +26,8 @@ var player_lives: int = 5
 static var INSTANCE: Game
 
 func _ready() -> void:
+	Brick.MOVE_TIMER = 70
+	spawn_timer = Brick.MOVE_TIMER * 5
 	INSTANCE = self
 	live_num.frame = player_lives
 	for i in 4:
@@ -56,6 +58,7 @@ func add_score(value: int):
 		bonus_health_timer = 65
 		damage()
 	score += value
+	Brick.MOVE_TIMER = maxi(30, 70 - score / 10)
 	var numCount = 0
 	var scoreBetween = score
 	while scoreBetween != 0:
@@ -90,7 +93,7 @@ func _physics_process(delta: float) -> void:
 	var screenSize = parent.get_viewport_rect().size
 	parent.scale = (minf(screenSize.x, screenSize.y) / 80.0) * Vector2.ONE
 	if player_lives <= 0:
-		if Input.is_action_just_pressed("shoot"):
+		if Input.is_action_just_pressed("shoot") or Input.is_action_just_pressed("pointer"):
 			get_tree().reload_current_scene()
 		return
 	
@@ -111,11 +114,16 @@ func _physics_process(delta: float) -> void:
 		spawn_timer = Brick.MOVE_TIMER * 5
 		spawn_bricks(0)
 	
-	if Input.is_action_pressed("left"):
-		player_pos -= 1
+	var offset = 0
 	if Input.is_action_pressed("right"):
-		player_pos += 1
-	if Input.is_action_pressed("shoot") and shoot_timer <= 0:
+		offset = 1
+	if Input.is_action_pressed("left"):
+		offset -= 1
+	if Input.is_action_pressed("pointer"):
+		if get_viewport().get_mouse_position().x > 40: offset += 1
+		else: offset -= 1
+	player_pos += clampi(offset, -1, 1)
+	if (Input.is_action_pressed("shoot") or OS.has_feature("web_android") or OS.has_feature("web_ios")) and shoot_timer <= 0:
 		shoot_side = !shoot_side
 		spawn_bullet(Vector2i(player_pos + (3 if shoot_side else 12), 67), false)
 		shoot_timer = 10
