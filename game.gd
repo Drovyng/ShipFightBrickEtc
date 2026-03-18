@@ -87,6 +87,7 @@ func check_player_damage(rect: Rect2i) -> bool:
 	return false
 
 func _physics_process(delta: float) -> void:
+	var screenSize = parent.get_viewport_rect().size
 	parent.scale = (minf(screenSize.x, screenSize.y) / 80.0) * Vector2.ONE
 	if player_lives <= 0:
 		if Input.is_action_just_pressed("shoot"):
@@ -99,7 +100,6 @@ func _physics_process(delta: float) -> void:
 		bonus_health_timer -= 1
 		if bonus_health_timer == 0:
 			bonus_health.visible = false
-	var screenSize = parent.get_viewport_rect().size
 	if shoot_timer > 0: shoot_timer -= 1
 	
 	if randi_range(0, 2) > 0 && player.modulate.a > 0.5:
